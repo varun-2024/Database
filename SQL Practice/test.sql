@@ -73,3 +73,9 @@ WHERE age =14;
 
 alter table user
 add column city varchar(25) default "Delhi";
+
+alter table user
+drop column city;
+
+alter table user
+rename to instauser;
