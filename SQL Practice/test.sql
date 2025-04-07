@@ -67,3 +67,9 @@ SET followers =600
 WHERE age=16;
 
 select * from user;
+
+DELETE FROM user
+WHERE age =14;
+
+alter table user
+add column city varchar(25) default "Delhi";
