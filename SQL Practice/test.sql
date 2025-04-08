@@ -79,3 +79,11 @@ drop column city;
 
 alter table user
 rename to instauser;
+
+use instagram;
+
+alter table instauser
+rename to user;
+
+Alter table user
+change column followers subs int default 0;
