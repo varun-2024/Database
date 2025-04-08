@@ -43,3 +43,4 @@ update student
 set grade = "B" where marks >60 and marks <= 70;
 
 truncate student;
+drop database college;
