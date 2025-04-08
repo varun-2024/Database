@@ -10,12 +10,14 @@ const connection = mysql.createConnection({
   database: "delta_app",
   password: "Cocacola123@",
 });
-
+// Connect to the database & Insert Data
+let q =
+  "Insert into user (id, username, email, password) values (? ,? , ? , ?)";
+let user = ["123", "new_user123", "newuser@gmail.com", "newuser123"];
 try {
-  connection.query("Show tables", (err, results, fields) => {
+  connection.query(q, user, (err, results, fields) => {
     if (err) throw err;
     console.log(results); // results contains rows returned by server
-    console.log(results.length);
   });
 } catch (err) {
   console.log(err);
