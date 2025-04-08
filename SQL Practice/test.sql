@@ -87,3 +87,13 @@ rename to user;
 
 Alter table user
 change column followers subs int default 0;
+
+ALTER TABLE user
+MODIFY subs INT DEFAULT 5;
+
+insert into user
+(id, age, name, email, following)
+values
+(7, 19, "gemini", "gem@gmail.com", 120);
+
+select * from user;
