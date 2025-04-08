@@ -15,6 +15,7 @@ try {
   connection.query("Show tables", (err, results, fields) => {
     if (err) throw err;
     console.log(results); // results contains rows returned by server
+    console.log(results.length);
   });
 } catch (err) {
   console.log(err);
