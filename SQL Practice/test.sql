@@ -97,3 +97,11 @@ values
 (7, 19, "gemini", "gem@gmail.com", 120);
 
 select * from user;
+
+select * from post;
+
+DROP table post;
+
+TRUNCATE TABLE user;
+
+Drop database instagram;
