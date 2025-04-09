@@ -4,10 +4,38 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home Page</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+      }
+      h1 {
+        color: #333;
+      }
+      button {
+        background-color: cadetblue;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #5a9;
+      }
+    </style>
   </head>
   <body>
     <h2>The Total Number of Users are: <%= resultCount %></h2>
     <br />
     <button>Join Us</button>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="/user"><button>Users</button></a>
   </body>
 </html>

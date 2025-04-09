@@ -6,6 +6,12 @@ const app = express();
 const port = 8080;
 //Require Path
 const path = require("path");
+// Require Method Override
+const methodOverride = require("method-override");
+app.use(methodOverride("_method"));
+// Require Data Parser
+app.use(express.urlencoded({ extended: true }));
+
 // Require EJS
 app.set("view engine", "ejs");
 // Set the views directory to the current directory
@@ -98,9 +104,9 @@ connection.end((err) => {
 
 // Get Request
 let resultCount = 0;
-
+// Home Route
 app.get("/", (req, res) => {
-  q = "Select count(*) from user";
+  q = `Select count(*) from user`;
   try {
     connection.query(q, (err, results) => {
       if (err) throw err;
@@ -114,7 +120,52 @@ app.get("/", (req, res) => {
     console.log("Error in Get Request");
   }
 });
+// Show User Route
+app.get("/user", (req, res) => {
+  let q = `Select * from user`;
+  try {
+    connection.query(q, (err, results) => {
+      if (err) throw err;
+      let users = results;
+      res.render("showusers.ejs", { users });
+    });
+  } catch (err) {
+    console.log(err);
+    console.log("Error in Get Request");
+  }
+});
 
+// Edit User Route
+app.get("/user/:id/edit", (req, res) => {
+  let { id } = req.params;
+  let q = `Select * from user where id = ?`;
+  try {
+    connection.query(q, [id], (err, results) => {
+      if (err) throw err;
+      let user = results[0];
+      res.render("edit.ejs", { user });
+    });
+  } catch (err) {
+    console.log(err);
+    console.log("Error in Get Request");
+  }
+});
+
+//Patch Request to Update User
+app.patch("/user/:id", (req, res) => {
+  let { id } = req.params;
+  let { username, email, password } = req.body;
+  let q = `Update user set username = ? , email = ? where password = ? and id = ?`;
+  try {
+    connection.query(q, [username, email, password, id], (err, results) => {
+      if (err) throw err;
+      res.redirect("/user");
+    });
+  } catch (err) {
+    console.log(err);
+    console.log("Error in Patch Request");
+  }
+});
 // Server Listening on Port
 app.listen(port, (req, res) => {
   console.log(`Server listening on port ${port}`);

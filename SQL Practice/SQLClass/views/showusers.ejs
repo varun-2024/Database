@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User List</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+      }
+      h1 {
+        color: #333;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+      th,
+      tr,
+      td {
+        border: 1px solid #8e8e8e;
+        padding: 8px;
+        text-align: left;
+        color: #333;
+        background-color: cadetblue;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+      tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+      tr:hover {
+        background-color: #ddd;
+      }
+      button {
+        background-color: cadetblue;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #5a9;
+      }
+      a {
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>User List</h1>
+    <a href="/"><button>Back</button></a>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Password</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (let i = 0; i < users.length; i++) { %>
+        <tr>
+          <td><%= users[i].id %></td>
+          <td><%= users[i].username %></td>
+          <td><%= users[i].email %></td>
+          <td><%= users[i].password %></td>
+          <td>
+            <form method="GET" action="/user/<%= users[i].id %>/edit">
+              <button
+                style="background-color: #fff; color: #333"
+                onmouseover="this.style.backgroundColor='#5a9';"
+                onmouseout="this.style.backgroundColor='#fff';"
+              >
+                Edit
+              </button>
+            </form>
+          </td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </body>
+</html>
