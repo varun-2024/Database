@@ -1,19 +1,5 @@
 // CJS Faker
 const { faker } = require("@faker-js/faker");
-// Require Express
-const express = require("express");
-const app = express();
-const port = 8080;
-//Require Path
-const path = require("path");
-// Require EJS
-app.set("view engine", "ejs");
-// Set the views directory to the current directory
-app.set("views", path.join(__dirname, "views"));
-// Set the public directory to the current directory
-//app.set("public", path.join(__dirname, "public"));
-
-//app.use(express.static(path.join(__dirname, "public")));
 
 // Get the client
 const mysql = require("mysql2");
@@ -35,14 +21,14 @@ const connection = mysql.createConnection({
   };
 }; */
 
-/* let getRandomUser = () => {
+let getRandomUser = () => {
   return [
     faker.string.uuid(),
     faker.internet.username(), // before version 9.1.0, use userName()
     faker.internet.email(),
     faker.internet.password(),
   ];
-}; */
+};
 
 //Get Random User Data
 //console.log(getRandomUser());
@@ -71,7 +57,7 @@ let user = [
   console.log(err);
 } */
 // Query to Insert Multiple Users using Faker
-/* let q = "Insert into user (id, username, email, password) values ?";
+let q = "Insert into user (id, username, email, password) values ?";
 // To make data variable an Array of Arrays of 100  users using for loop
 let data = [];
 for (let i = 0; i < 100; i++) {
@@ -94,28 +80,4 @@ connection.end((err) => {
   } else {
     console.log("Connection closed.");
   }
-}); */
-
-// Get Request
-let resultCount = 0;
-
-app.get("/", (req, res) => {
-  q = "Select count(*) from user";
-  try {
-    connection.query(q, (err, results) => {
-      if (err) throw err;
-      console.log(results[0]["count(*)"]); // results contains rows returned by server
-      resultCount = results[0]["count(*)"];
-      res.render("home.ejs", { resultCount });
-      //res.send(`Total users: ${resultCount}`);
-    });
-  } catch (err) {
-    console.log(err);
-    console.log("Error in Get Request");
-  }
-});
-
-// Server Listening on Port
-app.listen(port, (req, res) => {
-  console.log(`Server listening on port ${port}`);
 });
