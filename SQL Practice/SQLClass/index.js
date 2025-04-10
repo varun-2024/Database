@@ -21,6 +21,9 @@ app.set("views", path.join(__dirname, "views"));
 
 //app.use(express.static(path.join(__dirname, "public")));
 
+// Require UUID
+const { v4: uuidv4 } = require("uuid");
+
 // Get the client
 const mysql = require("mysql2");
 // Create the connection to database
@@ -164,11 +167,11 @@ app.patch("/user/:id", (req, res) => {
         console.log("Password is incorrect");
         res.render("wrongpass.ejs");
       } else {
-        let p = `Update user Set username = '${newUser}', email = '${formEmail}' Where id = '${id}'`;
-        connection.query(p, (err, results) => {
+        let q2 = `Update user Set username = '${newUser}', email = '${formEmail}' Where id = '${id}'`;
+        connection.query(q2, (err, results) => {
           if (err) throw err;
           console.log("User name and email updated successfully");
-          res.redirect("/user");
+          res.render("editsuccess.ejs");
         });
       }
 
@@ -179,6 +182,29 @@ app.patch("/user/:id", (req, res) => {
     console.log("Error in Patch Request");
   }
 });
+
+// Add User Route Get Request
+
+app.get("/user/adduser", (req, res) => {
+  res.render("adduser.ejs", { user: {} });
+});
+// Post Request to Add User
+app.post("/user/adduser", (req, res) => {
+  let id = uuidv4();
+  let { username, email, password } = req.body;
+  let q3 = `Insert into user (id, username, email, password) values ('${id}','${username}','${email}','${password}')`;
+  try {
+    connection.query(q3, (err, results) => {
+      if (err) throw err;
+      console.log("User added successfully");
+      res.render("success.ejs");
+    });
+  } catch (err) {
+    console.log(err);
+    console.log("Error in Post Request");
+  }
+});
+
 // Server Listening on Port
 app.listen(port, (req, res) => {
   console.log(`Server listening on port ${port}`);
