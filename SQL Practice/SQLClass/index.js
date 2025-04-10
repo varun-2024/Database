@@ -205,6 +205,52 @@ app.post("/user/adduser", (req, res) => {
   }
 });
 
+// Delete User GET Route
+app.get("/user/:id/delete", (req, res) => {
+  let { id } = req.params;
+  let q = `Select * from user where id = ?`;
+  try {
+    connection.query(q, [id], (err, results) => {
+      if (err) throw err;
+      let user = results[0];
+      res.render("delete.ejs", { user });
+    });
+  } catch (err) {
+    console.log(err);
+    console.log("Error in Get Request");
+  }
+});
+// Delete User POST Route
+app.delete("/user/:id/delete", (req, res) => {
+  let { id } = req.params;
+  let { username: formUser, email: formEmail, password: formPass } = req.body;
+  let q4 = `Select * from user where id = ?`;
+  try {
+    connection.query(q4, [id], (err, results) => {
+      if (err) throw err;
+      let user = results[0];
+      if (formPass !== user.password) {
+        console.log("Password is incorrect");
+        res.render("wrongpass.ejs");
+      } else {
+        let deleteQuery = `Delete from user where id = ? And username = ? And email = ? And password = ?`;
+        connection.query(
+          deleteQuery,
+          [id, formUser, formEmail, formPass],
+          (err, results) => {
+            if (err) throw err;
+            console.log("User deleted successfully");
+            res.render("deletesuccess.ejs");
+          }
+        );
+      }
+    });
+  } catch (err) {
+    console.log(err);
+    console.log("Error in Delete Request");
+  }
+});
+
 // Server Listening on Port
 app.listen(port, (req, res) => {
   console.log(`Server listening on port ${port}`);

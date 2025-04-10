@@ -9,7 +9,11 @@
         font-family: Arial, sans-serif;
         background-color: #f4f4f4;
         margin: 0;
-        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        /* Full viewport height */
       }
       h1 {
         color: #333;
@@ -25,8 +29,6 @@
         border: 1px solid #8e8e8e;
         padding: 8px;
         text-align: left;
-        color: #333;
-        background-color: cadetblue;
       }
       th {
         background-color: #f2f2f2;
@@ -36,6 +38,10 @@
       }
       tr:hover {
         background-color: #ddd;
+      }
+      td:hover {
+        color: #333;
+        background-color: cadetblue;
       }
       button {
         background-color: cadetblue;
@@ -55,9 +61,17 @@
       a {
         text-decoration: none;
       }
+      .top {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        color: #333;
+        background-color: #fff;
+        box-shadow: 10px 2px 5px rgba(0, 0, 0, 0.2);
+      }
     </style>
   </head>
-  <body>
+  <body id="top">
     <h1>User List</h1>
     <a href="/"><button>Back</button></a>
     <table>
@@ -80,10 +94,25 @@
             <form method="GET" action="/user/<%= users[i].id %>/edit">
               <button
                 style="background-color: #fff; color: #333"
-                onmouseover="this.style.backgroundColor='#5a9';"
+                onmouseover="this.style.backgroundColor='#fff';"
                 onmouseout="this.style.backgroundColor='#fff';"
               >
                 Edit
+              </button>
+            </form>
+          </td>
+          <td>
+            <form
+              method="GET"
+              action="/user/<%= users[i].id %>/delete"
+              onsubmit="return confirm('Are you sure you want to delete this user?');"
+            >
+              <button
+                style="background-color: #fff; color: #333"
+                onmouseover="this.style.backgroundColor='#fff';"
+                onmouseout="this.style.backgroundColor='#fff';"
+              >
+                Delete
               </button>
             </form>
           </td>
@@ -91,5 +120,6 @@
         <% } %>
       </tbody>
     </table>
+    <a class="top" href="#top"><button>Top</button></a>
   </body>
 </html>

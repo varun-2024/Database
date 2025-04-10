@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Edit User</title>
+    <title>Delete User</title>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -60,15 +60,15 @@
     </style>
   </head>
   <body>
-    <h1>Add User</h1>
-    <h2>Enter Details Here</h2>
-    <form action="/user/adduser" method="POST">
+    <h1>Delete User</h1>
+    <h2><%= user.username %></h2>
+    <form action="/user/<%= user.id %>/delete?_method=DELETE" method="POST">
       <label for="username">Username:</label>
       <input
         type="text"
         id="username"
         name="username"
-        placeholder="Enter username"
+        value="<%= user.username %>"
         required
       />
       <label for="email">Email:</label>
@@ -76,18 +76,13 @@
         type="email"
         id="email"
         name="email"
-        placeholder="Enter email"
+        value="<%= user.email %>"
         required
       />
       <label for="password">Password:</label>
-      <input
-        type="password"
-        id="password"
-        name="password"
-        placeholder="Enter password"
-        required
-      />
-      <button type="submit">Add User</button>
+      <input type="password" id="password" name="password" required />
+      <input type="hidden" name="id" value="<%= user.id %>" />
+      <button type="submit">Delete User</button>
       <a href="/user"><button type="button">Back</button></a>
     </form>
   </body>
