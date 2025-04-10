@@ -154,12 +154,25 @@ app.get("/user/:id/edit", (req, res) => {
 //Patch Request to Update User
 app.patch("/user/:id", (req, res) => {
   let { id } = req.params;
-  let { username, email, password } = req.body;
-  let q = `Update user set username = ? , email = ? where password = ? and id = ?`;
+  let { username: newUser, email: formEmail, password: formPass } = req.body;
+  let q = `Select * From user Where id = '${id}'`;
   try {
-    connection.query(q, [username, email, password, id], (err, results) => {
+    connection.query(q, (err, results) => {
       if (err) throw err;
-      res.redirect("/user");
+      let user = results[0];
+      if (formPass !== user.password) {
+        console.log("Password is incorrect");
+        res.render("wrongpass.ejs");
+      } else {
+        let p = `Update user Set username = '${newUser}', email = '${formEmail}' Where id = '${id}'`;
+        connection.query(p, (err, results) => {
+          if (err) throw err;
+          console.log("User name and email updated successfully");
+          res.redirect("/user");
+        });
+      }
+
+      console.log(user);
     });
   } catch (err) {
     console.log(err);
