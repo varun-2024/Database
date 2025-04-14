@@ -77,6 +77,11 @@ User.insertMany([
   .then((res) => console.log("User deleted from database\n", res))
   .catch((err) => console.log(err)); */
 
+// Find one and Delete a user in the database
+/* User.findOneAndDelete({ name: "Bob Brown" })
+  .then((res) => console.log("User deleted from database\n", res))
+  .catch((err) => console.log(err)); */
+
 /* const db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 db.once("open", () => {
