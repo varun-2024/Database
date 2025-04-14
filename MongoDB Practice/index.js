@@ -88,3 +88,40 @@ db.once("open", () => {
   console.log("Database connection established.");
   mongoose.connection.close();
 }); */
+
+const bookSchema = new mongoose.Schema({
+  title: String,
+  author: String,
+  price: Number,
+});
+
+const bookSchema2 = new mongoose.Schema({
+  title: {
+    type: String,
+    required: true,
+    maxLength: 100,
+  },
+  author: {
+    type: String,
+    required: true,
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
+  discount: {
+    type: Number,
+    default: 0,
+  },
+});
+const Book = mongoose.model("Book", bookSchema2);
+let Book1 = new Book({
+  title: "Harry Potter",
+  author: "J.K. Rowling",
+  price: 29.99,
+  discount: 5,
+  // If discount: undefined, // This will set the discount to 0
+});
+Book1.save()
+  .then((res) => console.log("Book saved to database\n", res))
+  .catch((err) => console.log(err));
