@@ -108,11 +108,17 @@ const bookSchema2 = new mongoose.Schema({
   price: {
     type: Number,
     required: true,
+    min: [1, "Price must be greater than 1"], // Custom error message
   },
   discount: {
     type: Number,
     default: 0,
   },
+  category: {
+    type: String,
+    enum: ["fiction", "non-fiction", "science", "history"],
+  },
+  genre: [String],
 });
 const Book = mongoose.model("Book", bookSchema2);
 let Book1 = new Book({
@@ -120,8 +126,19 @@ let Book1 = new Book({
   author: "J.K. Rowling",
   price: 29.99,
   discount: 5,
+  category: "fiction",
+  genre: ["fantasy", "adventure"],
   // If discount: undefined, // This will set the discount to 0
 });
 Book1.save()
   .then((res) => console.log("Book saved to database\n", res))
   .catch((err) => console.log(err));
+Book.findByIdAndUpdate(
+  "64f1c8e4b3d2f5a0c8e4b3d2",
+  { price: -19.99 },
+  { runValidators: true }
+)
+  .then((res) => {
+    console.log("Book updated in database\n", res.price);
+  })
+  .catch((err) => console.log(err.errors.price.properties.message)); // Custom Error in Price
