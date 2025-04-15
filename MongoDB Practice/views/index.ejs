@@ -10,6 +10,12 @@
     <div class="container">
       <h1>Welcome to WhatsAppy</h1>
       <h2>All Chat Messages</h2>
+      <div class="button-container">
+        <a href="/chats/new"><button type="button">New Chat</button></a>
+        <a href="/chats/clear"
+          ><button class="delete-button" type="button">Clear Chats</button></a
+        >
+      </div>
       <% for(let chat of chats){%>
       <div class="chat-container">
         <h3>From : <%= chat.from %></h3>
