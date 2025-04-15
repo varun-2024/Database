@@ -56,11 +56,13 @@ let chats = [
     created_at: new Date(),
   },
 ];
-Chat.insertMany(chats)
-  .then((res) => {
-    console.log("Chat saved successfully");
-    console.log(res);
-  })
-  .catch((err) => {
-    console.log("Error saving chat:", err);
-  });
+mongoose.connection.once("open", () => {
+  Chat.insertMany(chats)
+    .then((res) => {
+      console.log("Chat saved successfully");
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log("Error saving chat:", err);
+    });
+});

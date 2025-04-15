@@ -1,0 +1,44 @@
+.chat-container {
+  border: 1px solid #ccc;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+}
+.chat-container h3 {
+  margin: 0;
+  font-size: 1.2em;
+}
+.chat-container p {
+  margin: 5px 0;
+}
+.chat-container .user {
+  font-weight: bold;
+}
+.chat-container .message {
+  margin-left: 20px;
+}
+.chat-container .timestamp {
+  font-size: 0.8em;
+  color: #999;
+}
+.chat-container .timestamp span {
+  font-weight: bold;
+}
+.chat-container .timestamp span.user {
+  color: #333;
+}
+.chat-container .timestamp span.message {
+  color: #666;
+}
+.chat-container .timestamp span.time {
+  color: #999;
+}
+.chat-container .timestamp span.time::before {
+  content: "at ";
+}
+.chat-container .timestamp span.time::after {
+  content: " on ";
+}
+.chat-container .timestamp span.time::after {
+  content: attr(data-date);
+}
