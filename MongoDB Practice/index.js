@@ -9,8 +9,10 @@ const port = 8080;
 
 // Require Mongoose
 const mongoose = require("mongoose");
+
 // Require path
 const path = require("path");
+
 //Require EJs
 const ejs = require("ejs");
 
@@ -19,6 +21,7 @@ const Chat = require("./models/chat");
 
 // EJS Views Engine
 app.set("view engine", "ejs");
+
 // Views Path
 app.set("views", path.join(__dirname, "views"));
 
