@@ -7,16 +7,29 @@
     <link rel="stylesheet" href="/style.css" />
   </head>
   <body>
-    <h1>Welcome to Sasti WhatsApp</h1>
-    <h2>All Chat Messages</h2>
-    <% for(let chat of chats){%>
-    <div class="chat-container">
-      <h3>From : <%= chat.from %></h3>
-      <p>To : <%= chat.to %></p>
-      <p>Message : <%= chat.message %></p>
-      <p>Created At : <%= chat.created_at.toLocaleString() %></p>
+    <div class="container">
+      <h1>Welcome to WhatsAppy</h1>
+      <h2>All Chat Messages</h2>
+      <% for(let chat of chats){%>
+      <div class="chat-container">
+        <h3>From : <%= chat.from %></h3>
+        <p>To : <%= chat.to %></p>
+        <p>Message : <%= chat.message %></p>
+        <p>Created At : <%= chat.created_at.toLocaleString() %></p>
+        <div class="button-container">
+          <a href="/chats/<%= chat._id %>"
+            ><button type="button">View</button></a
+          >
+          <a href="/chats/<%= chat._id %>/edit"
+            ><button type="button">Edit</button></a
+          >
+          <a href="/chats/<%= chat._id %>/delete"
+            ><button class="delete-button" type="button">Delete</button></a
+          >
+        </div>
+      </div>
+      <% } %>
     </div>
-    <% } %>
   </body>
 </html>
 
