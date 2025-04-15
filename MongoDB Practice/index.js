@@ -1,11 +1,21 @@
 // Require Express
 const express = require("express");
+
+//Express App
+const app = express();
+
+// Port
+const port = 8080;
+
 // Require Mongoose
 const mongoose = require("mongoose");
 // Require path
 const path = require("path");
 //Require EJs
 const ejs = require("ejs");
+
+// Require Chat Model
+const Chat = require("./models/chat");
 
 // EJS Views Engine
 app.set("view engine", "ejs");
@@ -24,11 +34,6 @@ main()
   .catch((err) => {
     console.log(err);
   });
-//Express App
-const app = express();
-
-// Port
-const port = 8080;
 
 //Get Request Root
 app.get("/", (req, res) => {
