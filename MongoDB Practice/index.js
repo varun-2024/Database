@@ -28,6 +28,10 @@ app.set("views", path.join(__dirname, "views"));
 // Static Files Path
 app.use(express.static(path.join(__dirname, "public")));
 
+// Body Parser Middleware
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 // Set up default mongoose connection
 async function main() {
   await mongoose.connect("mongodb://127.0.0.1:27017/whatsapp");
@@ -80,6 +84,30 @@ app.get("/chats", async (req, res) => {
   }
 });
 
+//Get Request for New Chat
+app.get("/chats/new", (req, res) => {
+  res.render("new.ejs");
+});
+
+// Post Requesr New Chat
+app.post("/chats", async (req, res) => {
+  let { from, to, message } = req.body;
+  let created_at = new Date();
+  let chat = new Chat({
+    from,
+    to,
+    message,
+    created_at,
+  });
+  try {
+    await chat.save();
+    console.log("Chat saved successfully");
+    res.redirect("/chats");
+  } catch (err) {
+    console.log("Error saving chat:", err);
+    res.status(500).send("Error saving chat");
+  }
+});
 // Server Listning
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
