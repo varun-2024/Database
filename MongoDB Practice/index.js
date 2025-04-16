@@ -99,14 +99,18 @@ app.post("/chats", async (req, res) => {
     message,
     created_at,
   });
-  try {
+  chat
+    .save()
+    .then((res) => console.log("Chat Saved Successfully", res))
+    .catch((err) => console.log("Error Saving Chat", err));
+  /*   try {
     await chat.save();
     console.log("Chat saved successfully");
     res.redirect("/chats");
   } catch (err) {
     console.log("Error saving chat:", err);
     res.status(500).send("Error saving chat");
-  }
+  } */
 });
 // Server Listning
 app.listen(port, () => {
