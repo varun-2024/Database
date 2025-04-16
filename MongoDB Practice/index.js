@@ -95,7 +95,7 @@ app.get("/chats/new", (req, res) => {
   res.render("new.ejs");
 });
 
-// Post Requesr New Chat
+// Post Request New Chat
 app.post("/chats", async (req, res) => {
   let { from, to, message } = req.body;
   let created_at = new Date();
@@ -163,7 +163,7 @@ app.put("/chats/:id", async (req, res) => {
   let { id } = req.params;
   let updateChat = await Chat.findByIdAndUpdate(
     id,
-    { message: newMessage, updated_at },
+    { message: newMessage, created_at: updated_at },
     { new: true, runValidators: true }
   );
   res.redirect("/chats");

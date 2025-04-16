@@ -20,9 +20,12 @@
           <a href="/chats/<%= chat._id %>/edit"
             ><button type="button">Edit</button></a
           >
-          <a href="/chats/<%= chat._id %>/delete"
-            ><button class="delete-button" type="button">Delete</button></a
+          <form
+            action="/chats/<%= chat._id %>/delete?_method=DELETE"
+            method="POST"
           >
+            <button class="delete-button" type="submit">Delete</button>
+          </form>
         </div>
       </div>
     </div>
