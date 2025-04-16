@@ -22,6 +22,9 @@ const Chat = require("./models/chat");
 // Require method override
 const methodOverride = require("method-override");
 
+// Method Override Middleware
+app.use(methodOverride("_method"));
+
 // EJS Views Engine
 app.set("view engine", "ejs");
 
@@ -142,8 +145,20 @@ app.get("/chats/:id/edit", async (req, res) => {
 });
 
 // Edit Chat
+/* app.put("/chats/:id", async (req, res) => {
+  try {
+    let chat = await Chat.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    console.log(chat);
+    res.redirect("/chats");
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Error updating chat");
+  }
+}); */
 app.put("/chats/:id", async (req, res) => {
-  let { from, to, newMessage } = req.body;
+  let { from, to, message: newMessage } = req.body;
   let updated_at = new Date();
   let { id } = req.params;
   let updateChat = await Chat.findByIdAndUpdate(
@@ -151,6 +166,7 @@ app.put("/chats/:id", async (req, res) => {
     { message: newMessage, updated_at },
     { new: true, runValidators: true }
   );
+  res.redirect("/chats");
 });
 
 // Clear Chats
