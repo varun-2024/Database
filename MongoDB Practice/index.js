@@ -169,6 +169,18 @@ app.put("/chats/:id", async (req, res) => {
   res.redirect("/chats");
 });
 
+// Delete Chat route
+app.delete("/chats/:id/delete", async (req, res) => {
+  try {
+    await Chat.findByIdAndDelete(req.params.id);
+    console.log("Chat deleted successfully");
+    res.redirect("/chats");
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Error deleting chat");
+  }
+});
+
 // Clear Chats
 app.get("/chats/clear", async (req, res) => {
   try {
