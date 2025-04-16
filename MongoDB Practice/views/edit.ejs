@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Chat</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Welcome to WhatsAppy</h1>
+      <h2>Edit Chat Messages</h2>
+      <h3>From : <%= chat.from %></h3>
+      <h4>To : <%= chat.to %></h4>
+      <form action="/chats/<%= chat._id %>?_method=PUT" method="POST">
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" required rows="10" cols="45">
+<%= chat.message %></textarea
+        ></textarea
+        >
+        <br />
+        <button type="submit">Send</button>
+      </form>
+      <a href="/chats"><button type="button">Back to Chats</button></a>
+    </div>
+  </body>
+</html>

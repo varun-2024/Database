@@ -19,6 +19,9 @@ const ejs = require("ejs");
 // Require Chat Model
 const Chat = require("./models/chat");
 
+// Require method override
+const methodOverride = require("method-override");
+
 // EJS Views Engine
 app.set("view engine", "ejs");
 
@@ -39,7 +42,7 @@ async function main() {
 main()
   .then((res) => {
     console.log("Connected to MongoDB\n");
-    console.log(res);
+    console.log(res, "Here");
   })
   .catch((err) => {
     console.log(err);
@@ -103,6 +106,7 @@ app.post("/chats", async (req, res) => {
     .save()
     .then((res) => console.log("Chat Saved Successfully", res))
     .catch((err) => console.log("Error Saving Chat", err));
+  res.redirect("/chats");
   /*   try {
     await chat.save();
     console.log("Chat saved successfully");
@@ -112,6 +116,55 @@ app.post("/chats", async (req, res) => {
     res.status(500).send("Error saving chat");
   } */
 });
+
+// View Post
+app.get("/chats/:id/view", async (req, res) => {
+  try {
+    let chat = await Chat.findById(req.params.id);
+    console.log(chat);
+    res.render("view.ejs", { chat });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Error retrieving chat");
+  }
+});
+
+// Get Request for Edit Chat
+app.get("/chats/:id/edit", async (req, res) => {
+  try {
+    let chat = await Chat.findById(req.params.id);
+    console.log(chat);
+    res.render("edit.ejs", { chat });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Error retrieving chat");
+  }
+});
+
+// Edit Chat
+app.put("/chats/:id", async (req, res) => {
+  let { from, to, newMessage } = req.body;
+  let updated_at = new Date();
+  let { id } = req.params;
+  let updateChat = await Chat.findByIdAndUpdate(
+    id,
+    { message: newMessage, updated_at },
+    { new: true, runValidators: true }
+  );
+});
+
+// Clear Chats
+app.get("/chats/clear", async (req, res) => {
+  try {
+    await Chat.deleteMany({});
+    console.log("All chats deleted successfully");
+    res.redirect("/chats");
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Error deleting chats");
+  }
+});
+
 // Server Listning
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

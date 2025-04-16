@@ -9,23 +9,14 @@
   <body>
     <div class="container">
       <h1>Welcome to WhatsAppy</h1>
-      <h2>All Chat Messages</h2>
-      <div class="button-container">
-        <a href="/chats/new"><button type="button">New Chat</button></a>
-        <a href="/chats/clear"
-          ><button class="delete-button" type="button">Clear Chats</button></a
-        >
-      </div>
-      <% for(let chat of chats){%>
+      <h2>Messages From : <%= chat.from%></h2>
       <div class="chat-container">
         <h3>From : <%= chat.from %></h3>
         <p>To : <%= chat.to %></p>
         <p>Message : <%= chat.message %></p>
         <p>Created At : <%= chat.created_at.toLocaleString() %></p>
         <div class="button-container">
-          <a href="/chats/<%= chat._id %>/view"
-            ><button type="button">View</button></a
-          >
+          <a href="/chats/"><button type="button">Back</button></a>
           <a href="/chats/<%= chat._id %>/edit"
             ><button type="button">Edit</button></a
           >
@@ -34,7 +25,6 @@
           >
         </div>
       </div>
-      <% } %>
     </div>
   </body>
 </html>
