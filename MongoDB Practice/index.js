@@ -4,6 +4,9 @@ const express = require("express");
 //Express App
 const app = express();
 
+//Require ExpressError
+const ExpressError = require("./expresserror.js");
+
 // Port
 const port = 8080;
 
@@ -92,6 +95,7 @@ app.get("/chats", async (req, res) => {
 
 //Get Request for New Chat
 app.get("/chats/new", (req, res) => {
+  //throw new ExpressError(404, "Page Not Found");
   res.render("new.ejs");
 });
 
@@ -120,6 +124,17 @@ app.post("/chats", async (req, res) => {
   } */
 });
 
+// New Show Route Error Handling Trial - Get Route
+/* app.get("/chats/:id", async (req, res, next) => {
+  let { id } = req.params;
+  let chat = await Chat.findById(id);
+  if (!chat) {
+    throw new ExpressError(404, "Chat Not Found");
+  }
+  console.log("New Route");
+  res.render("edit.ejs", { chat });
+}); */
+
 // View Post
 app.get("/chats/:id/view", async (req, res) => {
   try {
@@ -145,7 +160,7 @@ app.get("/chats/:id/edit", async (req, res) => {
 });
 
 // Edit Chat
-/* app.put("/chats/:id", async (req, res) => {
+app.put("/chats/:id", async (req, res) => {
   try {
     let chat = await Chat.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
@@ -156,7 +171,7 @@ app.get("/chats/:id/edit", async (req, res) => {
     console.log(err);
     res.status(500).send("Error updating chat");
   }
-}); */
+});
 app.put("/chats/:id", async (req, res) => {
   let { from, to, message: newMessage } = req.body;
   let updated_at = new Date();
@@ -191,6 +206,12 @@ app.get("/chats/clear", async (req, res) => {
     console.log(err);
     res.status(500).send("Error deleting chats");
   }
+});
+
+// Error Handling Middleware
+app.use((err, req, res, next) => {
+  const { status = 500, message = "Something went wrong" } = err;
+  res.status(status).send(message);
 });
 
 // Server Listning
