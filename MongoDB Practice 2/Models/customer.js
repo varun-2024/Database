@@ -1,20 +1,15 @@
 const mongoose = require("mongoose");
-
 main()
   .then(() => console.log("Connection Sucessful"))
   .catch((err) => console.log(err));
-
 async function main() {
   await mongoose.connect("mongodb://127.0.0.1:27017/relationDemo");
 }
-
 const orderSchema = new mongoose.Schema({
   item: String,
   price: Number,
 });
-
 const Order = mongoose.model("Order", orderSchema);
-
 const addOrders = async () => {
   const result = await Order.insertMany([
     { item: "Samosa", price: 12 },
@@ -23,9 +18,7 @@ const addOrders = async () => {
   ]);
   console.log(result);
 };
-
 //addOrders();
-
 const customerSchema = new mongoose.Schema({
   name: String,
   orders: [
@@ -35,9 +28,7 @@ const customerSchema = new mongoose.Schema({
     },
   ],
 });
-
 const Customer = mongoose.model("Customer", customerSchema);
-
 const addCustomer = async () => {
   let cust1 = new Customer({
     name: "Rahul",
@@ -49,4 +40,9 @@ const addCustomer = async () => {
   let result = await cust1.save();
   console.log(result);
 };
-addCustomer();
+//addCustomer();
+const findCustomer = async () => {
+  let result = await Customer.find({}).populate("orders");
+  console.log(result[0]);
+};
+findCustomer();
