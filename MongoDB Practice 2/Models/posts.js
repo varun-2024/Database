@@ -34,6 +34,17 @@ const addData = async () => {
 };
 //addData();
 
+const addPost = async () => {
+  let user = await User.findOne({ username: "rahul Kumar" });
+  let post2 = new Post({
+    content: "Bye Bye :)",
+    likes: 23,
+  });
+  post2.user = user;
+  await post2.save();
+};
+//addPost();
+
 (async () => {
   let result = await Post.find({}).populate("user");
   console.log(result);
